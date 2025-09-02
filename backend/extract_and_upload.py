@@ -5,8 +5,8 @@ import os
 # === CONFIG ===
 VIDEO_PATH = 'walk_video.mp4'           # Video saved from frontend
 FRAME_DIR = 'frames'                    # Where extracted frames go
-BUCKET_NAME = 'your-s3-bucket-name'     # Replace with your actual bucket
-S3_PREFIX = 'walk-frames/'              # Optional folder path in S3
+BUCKET_NAME = 'plastic-bottle-detector-images'     # Replace with your actual bucket
+S3_PREFIX = 'uploads/'              # Optional folder path in S3
 
 # === SETUP ===
 os.makedirs(FRAME_DIR, exist_ok=True)
