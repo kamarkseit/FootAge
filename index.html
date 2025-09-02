@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Walk Recorder</title>
+    <title>FootAge Recorder</title>
 </head>
 
 <body>
@@ -29,30 +29,23 @@
             mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
             mediaRecorder.onstop = async () => {
                 const blob = new Blob(recordedChunks, { type: 'video/webm' });
-                const file = new File([blob], 'walk_video.webm');
+                const formData = new FormData();
+                formData.append('video', blob, 'walk_video.webm');
 
-                // Send to backend to get presigned URL
-                const res = await fetch('/get-presigned-url', {
+                // ✅ This is where your fetch() call goes
+                fetch('https://your-backend.com/upload', {
                     method: 'POST',
-                    body: JSON.stringify({ filename: file.name }),
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                const { url } = await res.json();
-
-                // Upload to S3
-                await fetch(url, {
-                    method: 'PUT',
-                    body: file
-                });
-
-                alert('✅ Video uploaded!');
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => alert('✅ Video uploaded and processed'))
+                    .catch(error => alert('❌ Upload failed: ' + error));
             };
 
             mediaRecorder.start();
             stopBtn.disabled = false;
             startBtn.disabled = true;
 
-            // Auto-stop after 1 minute
             setTimeout(() => {
                 if (mediaRecorder.state === 'recording') mediaRecorder.stop();
             }, 60000);
