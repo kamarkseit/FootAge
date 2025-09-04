@@ -33,7 +33,7 @@
                 formData.append('video', blob, 'walk_video.webm');
 
                 // ✅ This is where your fetch() call goes
-                fetch('https://your-backend.com/upload', {
+                fetch('https://footage-backend.onrender.com/upload', {
                     method: 'POST',
                     body: formData
                 })
