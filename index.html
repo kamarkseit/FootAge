@@ -13,6 +13,9 @@
     <button id="startBtn">Start Recording</button>
     <button id="stopBtn" disabled>Stop Recording</button>
 
+    <h2>Detection Summary</h2>
+    <div id="bottle-count">Loading...</div>
+
     <script>
         let mediaRecorder;
         let recordedChunks = [];
@@ -20,6 +23,10 @@
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
         const preview = document.getElementById('preview');
+
+        let stopTime
+        let stopTime2
+        console.log("📅 Recording stopped at:", stopTime);
 
         startBtn.onclick = async () => {
             recordedChunks = [];
@@ -48,15 +55,87 @@
             startBtn.disabled = true;
 
             setTimeout(() => {
-                if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+                if (mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                    stopTime = getFormattedTimestamp();
+                    stopTime2 = getFormattedTimestamp2();
+                }
             }, 30000);
         };
 
         stopBtn.onclick = () => {
+            stopTime = getFormattedTimestamp();
+            stopTime2 = getFormattedTimestamp2();
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
             stopBtn.disabled = true;
             startBtn.disabled = false;
         };
+
+        // Fetching json results and displaying it.
+        const urls = [
+            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime}/all_results.json`,
+            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime2}/all_results.json`
+        ];
+
+        async function tryFetch(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (err) {
+                return null;
+            }
+        }
+
+        async function pollForResults(interval = 10000, maxAttempts = 60) {
+            let attempts = 0;
+
+            while (attempts < maxAttempts) {
+                for (const url of urls) {
+                    const data = await tryFetch(url);
+                    if (data) {
+                        const count = data.reduce((sum, frame) => sum + frame.unique_bottles, 0);
+                        document.getElementById("bottle-count").textContent =
+                            `🍼 Total bottles detected: ${count}`;
+                        return;
+                    }
+                }
+
+                attempts++;
+                console.log(`🔄 Attempt ${attempts}: JSON not yet available`);
+                await new Promise(resolve => setTimeout(resolve, interval));
+            }
+
+            document.getElementById("bottle-count").textContent =
+                "⚠️ Detection results not found after waiting.";
+        }
+
+        pollForResults();
+
+        // function to get the right date and time for fetching.
+        function getFormattedTimestamp() {
+            const now = new Date();
+
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const dd = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+
+            return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
+        }
+        function getFormattedTimestamp2() {
+            const now = new Date();
+
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const dd = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes() + 1).padStart(2, '0');
+
+            return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
+        }
+
     </script>
 </body>
 
