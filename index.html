@@ -58,14 +58,18 @@
                 if (mediaRecorder.state === 'recording') {
                     mediaRecorder.stop();
                     stopTime = getFormattedTimestamp();
+                    console.log("MY STOPTIME", stopTime);
                     stopTime2 = getFormattedTimestamp2();
+                    console.log("MY STOPTIME", stopTime2);
                 }
             }, 30000);
         };
 
         stopBtn.onclick = () => {
             stopTime = getFormattedTimestamp();
+            console.log("MY STOPTIME", stopTime);
             stopTime2 = getFormattedTimestamp2();
+            console.log("MY STOPTIME", stopTime2);
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
             stopBtn.disabled = true;
             startBtn.disabled = false;
@@ -76,6 +80,7 @@
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime}/all_results.json`,
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime2}/all_results.json`
         ];
+        console.log("MY URLS", urls);
 
         async function tryFetch(url) {
             try {
