@@ -61,6 +61,11 @@
                     console.log("MY STOPTIME", stopTime);
                     stopTime2 = getFormattedTimestamp2();
                     console.log("MY STOPTIME", stopTime2);
+                    urls = [
+                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime}/all_results.json`,
+                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime2}/all_results.json`
+                    ];
+                    pollForResults();
                 }
             }, 30000);
         };
@@ -70,13 +75,18 @@
             console.log("MY STOPTIME", stopTime);
             stopTime2 = getFormattedTimestamp2();
             console.log("MY STOPTIME", stopTime2);
+            urls = [
+                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime}/all_results.json`,
+                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime2}/all_results.json`
+            ];
+            pollForResults();
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
             stopBtn.disabled = true;
             startBtn.disabled = false;
         };
 
         // Fetching json results and displaying it.
-        const urls = [
+        let urls = [
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime}/all_results.json`,
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime2}/all_results.json`
         ];
@@ -115,7 +125,7 @@
                 "⚠️ Detection results not found after waiting.";
         }
 
-        pollForResults();
+
 
         // function to get the right date and time for fetching.
         function getFormattedTimestamp() {
