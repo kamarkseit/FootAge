@@ -14,7 +14,7 @@
     <button id="stopBtn" disabled>Stop Recording</button>
 
     <h2>Detection Summary</h2>
-    <div id="bottle-count">Loading...</div>
+    <div id="bottle-count">Let's see how many bottles we can spot!</div>
 
     <script>
         let mediaRecorder;
@@ -28,6 +28,8 @@
         let stopTime2
 
         startBtn.onclick = async () => {
+            document.getElementById("bottle-count").textContent =
+                "Loading...";
             recordedChunks = [];
             const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } }, audio: true });
             preview.srcObject = stream;
