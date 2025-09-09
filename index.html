@@ -75,8 +75,8 @@
             stopTime2 = getFormattedTimestamp2();
             console.log("MY STOPTIME", stopTime2);
             urls = [
-                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime}/all_results.json`,
-                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResults-${stopTime2}/all_results.json`
+                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`,
+                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime2}/all_results.json`
             ];
             pollForResults();
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
