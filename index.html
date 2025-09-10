@@ -25,7 +25,7 @@
         const preview = document.getElementById('preview');
 
         let stopTime
-        let stopTime2
+        //let stopTime2
 
         startBtn.onclick = async () => {
             document.getElementById("bottle-count").textContent =
@@ -60,11 +60,10 @@
                     mediaRecorder.stop();
                     stopTime = getFormattedTimestamp();
                     console.log("MY STOPTIME", stopTime);
-                    stopTime2 = getFormattedTimestamp2();
-                    console.log("MY STOPTIME", stopTime2);
+                    // stopTime2 = getFormattedTimestamp2();
+                    // console.log("MY STOPTIME", stopTime2);
                     urls = [
-                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`,
-                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime2}/all_results.json`
+                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`
                     ];
                     pollForResults();
                 }
@@ -74,11 +73,10 @@
         stopBtn.onclick = () => {
             stopTime = getFormattedTimestamp();
             console.log("MY STOPTIME", stopTime);
-            stopTime2 = getFormattedTimestamp2();
-            console.log("MY STOPTIME", stopTime2);
+            // stopTime2 = getFormattedTimestamp2();
+            // console.log("MY STOPTIME", stopTime2);
             urls = [
-                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`,
-                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime2}/all_results.json`
+                `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`
             ];
             pollForResults();
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
@@ -88,8 +86,7 @@
 
         // Fetching json results and displaying it.
         let urls = [
-            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`,
-            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime2}/all_results.json`
+            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`
         ];
         console.log("MY URLS", urls);
 
@@ -147,26 +144,27 @@
             const dd = String(now.getDate()).padStart(2, '0');
             const hh = String(now.getHours()).padStart(2, '0');
             const min = String(now.getMinutes()).padStart(2, '0');
+            const sec = String(now.getSeconds()).padStart(2, '0');
 
-            return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
+            return `${yyyy}-${mm}-${dd}_${hh}-${min}-${sec}`;
         }
-        function getFormattedTimestamp2() {
-            // get the current time and store it in a variable.
-            let now = new Date();
-            // move the time ahead 7 hours.
-            now.setHours(now.getHours() + 7)
-            // move the minutes ahead 1 minute.
-            now.setMinutes(now.getMinutes() + 1)
-            // move the month ahead 1 month (to account for a zero based index)
-            now.setMonth(now.getMonth() + 1);
-            const yyyy = now.getFullYear();
-            const mm = String(now.getMonth()).padStart(2, '0'); // Months are 0-indexed
-            const dd = String(now.getDate()).padStart(2, '0');
-            const hh = String(now.getHours()).padStart(2, '0');
-            const min = String(now.getMinutes()).padStart(2, '0');
+        // function getFormattedTimestamp2() {
+        //     // get the current time and store it in a variable.
+        //     let now = new Date();
+        //     // move the time ahead 7 hours.
+        //     now.setHours(now.getHours() + 7)
+        //     // move the minutes ahead 1 minute.
+        //     now.setMinutes(now.getMinutes() + 1)
+        //     // move the month ahead 1 month (to account for a zero based index)
+        //     now.setMonth(now.getMonth() + 1);
+        //     const yyyy = now.getFullYear();
+        //     const mm = String(now.getMonth()).padStart(2, '0'); // Months are 0-indexed
+        //     const dd = String(now.getDate()).padStart(2, '0');
+        //     const hh = String(now.getHours()).padStart(2, '0');
+        //     const min = String(now.getMinutes()).padStart(2, '0');
 
-            return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
-        }
+        //     return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
+        // }
 
     </script>
 </body>
