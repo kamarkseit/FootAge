@@ -28,6 +28,9 @@
         //let stopTime2
 
         startBtn.onclick = async () => {
+            startTime = getFormattedTimestamp();
+            console.log("MY STARTIME", startTime);
+
             document.getElementById("bottle-count").textContent =
                 "Loading...";
             recordedChunks = [];
@@ -40,7 +43,7 @@
                 const blob = new Blob(recordedChunks, { type: 'video/webm' });
                 const formData = new FormData();
                 formData.append('video', blob, 'walk_video.webm');
-                formData.append('id', stopTime);
+                formData.append('id', startTime);
 
                 // ✅ This is where your fetch() call goes
                 fetch('https://footage-backend.onrender.com/upload', {
@@ -57,8 +60,8 @@
             startBtn.disabled = true;
 
             setTimeout(() => {
-                stopTime = getFormattedTimestamp();
-                console.log("MY STOPTIME", stopTime);
+                // stopTime = getFormattedTimestamp();
+                // console.log("MY STOPTIME", stopTime);
                 // stopTime2 = getFormattedTimestamp2();
                 // console.log("MY STOPTIME", stopTime2);
                 urls = [
@@ -72,8 +75,8 @@
         };
 
         stopBtn.onclick = () => {
-            stopTime = getFormattedTimestamp();
-            console.log("MY STOPTIME", stopTime);
+            // stopTime = getFormattedTimestamp();
+            // console.log("MY STOPTIME", stopTime);
             // stopTime2 = getFormattedTimestamp2();
             // console.log("MY STOPTIME", stopTime2);
             urls = [
@@ -149,23 +152,6 @@
 
             return `${yyyy}-${mm}-${dd}_${hh}-${min}-${sec}`;
         }
-        // function getFormattedTimestamp2() {
-        //     // get the current time and store it in a variable.
-        //     let now = new Date();
-        //     // move the time ahead 7 hours.
-        //     now.setHours(now.getHours() + 7)
-        //     // move the minutes ahead 1 minute.
-        //     now.setMinutes(now.getMinutes() + 1)
-        //     // move the month ahead 1 month (to account for a zero based index)
-        //     now.setMonth(now.getMonth() + 1);
-        //     const yyyy = now.getFullYear();
-        //     const mm = String(now.getMonth()).padStart(2, '0'); // Months are 0-indexed
-        //     const dd = String(now.getDate()).padStart(2, '0');
-        //     const hh = String(now.getHours()).padStart(2, '0');
-        //     const min = String(now.getMinutes()).padStart(2, '0');
-
-        //     return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
-        // }
 
     </script>
 </body>
