@@ -40,6 +40,7 @@
                 const blob = new Blob(recordedChunks, { type: 'video/webm' });
                 const formData = new FormData();
                 formData.append('video', blob, 'walk_video.webm');
+                formData.append('id', stopTime);
 
                 // ✅ This is where your fetch() call goes
                 fetch('https://footage-backend.onrender.com/upload', {
@@ -56,17 +57,17 @@
             startBtn.disabled = true;
 
             setTimeout(() => {
-                if (mediaRecorder.state === 'recording') {
-                    mediaRecorder.stop();
-                    stopTime = getFormattedTimestamp();
-                    console.log("MY STOPTIME", stopTime);
-                    // stopTime2 = getFormattedTimestamp2();
-                    // console.log("MY STOPTIME", stopTime2);
-                    urls = [
-                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`
-                    ];
-                    pollForResults();
-                }
+                stopTime = getFormattedTimestamp();
+                console.log("MY STOPTIME", stopTime);
+                // stopTime2 = getFormattedTimestamp2();
+                // console.log("MY STOPTIME", stopTime2);
+                urls = [
+                    `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${stopTime}/all_results.json`
+                ];
+                pollForResults();
+                if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+                stopBtn.disabled = true;
+                startBtn.disabled = false;
             }, 30000);
         };
 
