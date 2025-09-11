@@ -26,6 +26,13 @@
 
         let idStartTime;
         let startTime, stopTime;
+        const durationMs = stopTime - startTime;
+        const durationSec = durationMs / 1000;
+        const x = 1 + Math.floor(durationSec / 0.5); // number of 30-second segments
+
+        let urls = [
+            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
+        ];
 
         startBtn.onclick = async () => {
             startTime = Date.now()
@@ -83,11 +90,8 @@
             stopTime = Date.now();
             console.log("Start time", startTime);
             console.log("Stop time", stopTime);
-            const durationMs = stopTime - startTime;
             console.log("DURATION IN MS:", durationMs);
-            const durationSec = durationMs / 1000;
             console.log("DURATION IN SEC:", durationSec);
-            const x = 1 + Math.floor(durationSec / 0.5); // number of 30-second segments
             console.log("MY variable x:", x);
 
             urls = [
@@ -100,10 +104,6 @@
         };
 
         // Functions to fetch json results and display it.
-        let urls = [
-            `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
-        ];
-
         async function tryFetch(url) {
             try {
                 const response = await fetch(url);
