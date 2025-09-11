@@ -110,7 +110,7 @@
             while (attempts < maxAttempts) {
                 for (const url of urls) {
                     const data = await tryFetch(url);
-                    if (data.length === x) {
+                    if (data.frame_info.length === x) {
                         const uniqueIds = new Set();
                         data.forEach(frame => {
                             frame.tracker_ids.forEach(id => uniqueIds.add(id));
