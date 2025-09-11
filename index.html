@@ -61,7 +61,9 @@
             startBtn.disabled = true;
 
             setTimeout(() => {
-                stopTime = Date.now()
+                stopTime = Date.now();
+                console.log("DURATION IN SEC:", durationSec);
+                console.log("MY variable x:", x);
                 urls = [
                     `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
                 ];
@@ -73,7 +75,9 @@
         };
 
         stopBtn.onclick = () => {
-            stopTime = Date.now()
+            stopTime = Date.now();
+            console.log("DURATION IN SEC:", durationSec);
+            console.log("MY variable x:", x);
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
@@ -87,12 +91,9 @@
         let urls = [
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
         ];
-
         const durationMs = stopTime - startTime;
         const durationSec = durationMs / 1000;
-        console.log("DURATION IN SEC:", durationSec)
         const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
-        console.log("MY variable x:", x)
 
         async function tryFetch(url) {
             try {
@@ -111,7 +112,7 @@
                 for (const url of urls) {
                     const data = await tryFetch(url);
                     if (data) {
-                        if (data.frame_info.length === x) {
+                        if (data.length === x) {
                             const uniqueIds = new Set();
                             data.forEach(frame => {
                                 frame.tracker_ids.forEach(id => uniqueIds.add(id));
