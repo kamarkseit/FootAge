@@ -61,19 +61,21 @@
             startBtn.disabled = true;
 
             setTimeout(() => {
-                stopTime = Date.now();
-                const durationMs = stopTime - startTime;
-                const durationSec = durationMs / 1000;
-                const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
-                console.log("DURATION IN SEC:", durationSec);
-                console.log("MY variable x:", x);
-                urls = [
-                    `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
-                ];
-                pollForResults();
-                if (mediaRecorder.state === 'recording') mediaRecorder.stop();
-                stopBtn.disabled = true;
-                startBtn.disabled = false;
+                if ((stopBtn.disabled = false) && (startBtn.disabled = true)) {
+                    stopTime = Date.now();
+                    const durationMs = stopTime - startTime;
+                    const durationSec = durationMs / 1000;
+                    const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
+                    console.log("DURATION IN SEC:", durationSec);
+                    console.log("MY variable x:", x);
+                    urls = [
+                        `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
+                    ];
+                    pollForResults();
+                    if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+                    stopBtn.disabled = true;
+                    startBtn.disabled = false;
+                };
             }, 30000);
         };
 
