@@ -101,7 +101,7 @@
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
-            pollForResults(num_of_frames = x);
+            pollForResults(interval = 10000, maxAttempts = 60, num_of_frames = x);
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
             stopBtn.disabled = true;
             startBtn.disabled = false;
@@ -125,7 +125,7 @@
                 for (const url of urls) {
                     const data = await tryFetch(url);
                     if (data) {
-                        if (data.length === x) {
+                        if (data.length === num_of_frames) {
                             const uniqueIds = new Set();
                             data.forEach(frame => {
                                 frame.tracker_ids.forEach(id => uniqueIds.add(id));
