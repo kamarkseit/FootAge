@@ -110,20 +110,19 @@
             while (attempts < maxAttempts) {
                 for (const url of urls) {
                     const data = await tryFetch(url);
-                    if (data.frame_info.length === x) {
-                        const uniqueIds = new Set();
-                        data.forEach(frame => {
-                            frame.tracker_ids.forEach(id => uniqueIds.add(id));
-                        });
-                        console.log(uniqueIds)
-                        const count = uniqueIds.size;
-                        //const count = data.reduce((sum, frame) => sum + frame.unique_bottles, 0);
-                        document.getElementById("bottle-count").textContent =
-                            `🍼 Total bottles detected: ${count}`;
-                        return;
+                    if (data) {
+                        if (data.frame_info.length === x) {
+                            const uniqueIds = new Set();
+                            data.forEach(frame => {
+                                frame.tracker_ids.forEach(id => uniqueIds.add(id));
+                            });
+                            const count = uniqueIds.size;
+                            document.getElementById("bottle-count").textContent =
+                                `🍼 Total bottles detected: ${count}`;
+                            return;
+                        }
                     }
                 }
-
                 attempts++;
                 console.log(`🔄 Attempt ${attempts}: JSON not yet available`);
                 await new Promise(resolve => setTimeout(resolve, interval));
