@@ -62,6 +62,9 @@
 
             setTimeout(() => {
                 stopTime = Date.now();
+                const durationMs = stopTime - startTime;
+                const durationSec = durationMs / 1000;
+                const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
                 console.log("DURATION IN SEC:", durationSec);
                 console.log("MY variable x:", x);
                 urls = [
@@ -76,6 +79,9 @@
 
         stopBtn.onclick = () => {
             stopTime = Date.now();
+            const durationMs = stopTime - startTime;
+            const durationSec = durationMs / 1000;
+            const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
             console.log("DURATION IN SEC:", durationSec);
             console.log("MY variable x:", x);
             urls = [
@@ -87,13 +93,10 @@
             startBtn.disabled = false;
         };
 
-        // Fetching json results and displaying it.
+        // Functions to fetch json results and display it.
         let urls = [
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
         ];
-        const durationMs = stopTime - startTime;
-        const durationSec = durationMs / 1000;
-        const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
 
         async function tryFetch(url) {
             try {
@@ -134,8 +137,7 @@
         }
 
 
-
-        // function to get the right date and time for fetching.
+        // Function to get the right date and time id for fetching.
         function getFormattedTimestamp() {
             // get the current time and store it in a variable.
             let now = new Date();
