@@ -79,11 +79,15 @@
 
         stopBtn.onclick = () => {
             stopTime = Date.now();
+            console.log("Start time", startTime);
+            console.log("Stop time", stopTime);
             const durationMs = stopTime - startTime;
+            console.log("DURATION IN MS:", durationMs);
             const durationSec = durationMs / 1000;
-            const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
             console.log("DURATION IN SEC:", durationSec);
+            const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
             console.log("MY variable x:", x);
+
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
