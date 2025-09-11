@@ -26,9 +26,6 @@
 
         let idStartTime;
         let startTime, stopTime;
-        let durationMs = stopTime - startTime;
-        let durationSec = durationMs / 1000;
-        let x = 1 + Math.floor(durationSec / 0.5); // number of 30-second segments
 
         let urls = [
             `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
@@ -73,8 +70,12 @@
                     const durationMs = stopTime - startTime;
                     const durationSec = durationMs / 1000;
                     const x = 1 + Math.floor(durationSec / 30); // number of 30-second segments
+                    console.log("Start time", startTime);
+                    console.log("Stop time", stopTime);
+                    console.log("DURATION IN MS:", durationMs);
                     console.log("DURATION IN SEC:", durationSec);
                     console.log("MY variable x:", x);
+
                     urls = [
                         `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
                     ];
@@ -88,6 +89,9 @@
 
         stopBtn.onclick = () => {
             stopTime = Date.now();
+            const durationMs = stopTime - startTime;
+            const durationSec = durationMs / 1000;
+            const x = 1 + Math.floor(durationSec / 0.5); // number of 30-second segments
             console.log("Start time", startTime);
             console.log("Stop time", stopTime);
             console.log("DURATION IN MS:", durationMs);
@@ -97,7 +101,7 @@
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
-            pollForResults();
+            pollForResults(num_of_frames = x);
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
             stopBtn.disabled = true;
             startBtn.disabled = false;
@@ -114,7 +118,7 @@
             }
         }
 
-        async function pollForResults(interval = 10000, maxAttempts = 60) {
+        async function pollForResults(interval = 10000, maxAttempts = 60, num_of_frames) {
             let attempts = 0;
 
             while (attempts < maxAttempts) {
