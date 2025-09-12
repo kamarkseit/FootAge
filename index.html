@@ -140,15 +140,13 @@
                         return;
                     }
                 }
+                attempts++;
+                console.log(`🔄 Attempt ${attempts}: JSON not yet available`);
+                await new Promise(resolve => setTimeout(resolve, interval));
             }
-            attempts++;
-            console.log(`🔄 Attempt ${attempts}: JSON not yet available`);
-            await new Promise(resolve => setTimeout(resolve, interval));
+            document.getElementById("bottle-count").textContent =
+                "⚠️ Detection results not found after waiting.";
         }
-
-        document.getElementById("bottle-count").textContent =
-            "⚠️ Detection results not found after waiting.";
-
 
 
         // Function to get the right date and time id for fetching.
