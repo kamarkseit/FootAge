@@ -70,7 +70,7 @@
 
                     stopTime = Date.now();
                     const durationMs = stopTime - startTime;
-                    const durationSec = durationMs / 1000;
+                    const durationSec = durationMs / 1000 - 0.025;
                     const x = Math.floor(durationSec / 30) + 1; // number of 30-second segments
                     console.log("Start time", startTime);
                     console.log("Stop time", stopTime);
@@ -94,7 +94,7 @@
 
             stopTime = Date.now();
             const durationMs = stopTime - startTime;
-            const durationSec = durationMs / 1000;
+            const durationSec = durationMs / 1000 - 0.025;
             const x = Math.floor(durationSec / 0.5) + 1; // number of 30-second segments
             console.log("Start time", startTime);
             console.log("Stop time", stopTime);
@@ -129,26 +129,26 @@
                 for (const url of urls) {
                     const data = await tryFetch(url);
                     if (data) {
-                        if (data.length === num_of_frames) {
-                            const uniqueIds = new Set();
-                            data.forEach(frame => {
-                                frame.tracker_ids.forEach(id => uniqueIds.add(id));
-                            });
-                            const count = uniqueIds.size;
-                            document.getElementById("bottle-count").textContent =
-                                `🍼 Total bottles detected: ${count}`;
-                            return;
-                        }
+                        //if (data.length === num_of_frames) {
+                        const uniqueIds = new Set();
+                        data.forEach(frame => {
+                            frame.tracker_ids.forEach(id => uniqueIds.add(id));
+                        });
+                        const count = uniqueIds.size;
+                        document.getElementById("bottle-count").textContent =
+                            `🍼 Total bottles detected: ${count}`;
+                        return;
                     }
                 }
-                attempts++;
-                console.log(`🔄 Attempt ${attempts}: JSON not yet available`);
-                await new Promise(resolve => setTimeout(resolve, interval));
             }
-
-            document.getElementById("bottle-count").textContent =
-                "⚠️ Detection results not found after waiting.";
+            attempts++;
+            console.log(`🔄 Attempt ${attempts}: JSON not yet available`);
+            await new Promise(resolve => setTimeout(resolve, interval));
         }
+
+        document.getElementById("bottle-count").textContent =
+            "⚠️ Detection results not found after waiting.";
+
 
 
         // Function to get the right date and time id for fetching.
