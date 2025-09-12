@@ -108,7 +108,7 @@
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
-            pollForResults(interval = 10000, maxAttempts = 60, num_of_frames = x);
+            pollForResults();
         };
 
         // Functions to fetch json results and display it.
@@ -122,7 +122,7 @@
             }
         }
 
-        async function pollForResults(interval = 10000, maxAttempts = 60, num_of_frames) {
+        async function pollForResults(interval = 10000, maxAttempts = 60) {
             let attempts = 0;
 
             while (attempts < maxAttempts) {
