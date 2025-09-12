@@ -32,7 +32,6 @@
         ];
 
         startBtn.onclick = async () => {
-            startTime = Date.now()
             idStartTime = getFormattedTimestamp();
             console.log("MY STARTIME ID", idStartTime);
 
@@ -61,11 +60,14 @@
             };
 
             mediaRecorder.start();
+            startTime = Date.now();
             stopBtn.disabled = false;
             startBtn.disabled = true;
 
             setTimeout(() => {
                 if ((stopBtn.disabled = false) && (startBtn.disabled = true)) {
+                    if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+
                     stopTime = Date.now();
                     const durationMs = stopTime - startTime;
                     const durationSec = durationMs / 1000;
@@ -76,18 +78,20 @@
                     console.log("DURATION IN SEC:", durationSec);
                     console.log("MY variable x:", x);
 
+                    stopBtn.disabled = true;
+                    startBtn.disabled = false;
+
                     urls = [
                         `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
                     ];
                     pollForResults();
-                    if (mediaRecorder.state === 'recording') mediaRecorder.stop();
-                    stopBtn.disabled = true;
-                    startBtn.disabled = false;
                 };
             }, 30000);
         };
 
         stopBtn.onclick = () => {
+            if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+
             stopTime = Date.now();
             const durationMs = stopTime - startTime;
             const durationSec = durationMs / 1000;
@@ -98,13 +102,13 @@
             console.log("DURATION IN SEC:", durationSec);
             console.log("MY variable x:", x);
 
+            stopBtn.disabled = true;
+            startBtn.disabled = false;
+
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
             pollForResults(interval = 10000, maxAttempts = 60, num_of_frames = x);
-            if (mediaRecorder.state === 'recording') mediaRecorder.stop();
-            stopBtn.disabled = true;
-            startBtn.disabled = false;
         };
 
         // Functions to fetch json results and display it.
