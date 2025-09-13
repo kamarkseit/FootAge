@@ -44,7 +44,7 @@
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
             mediaRecorder.onstop = async () => {
-                stopBtn.disabled = false;
+                stopBtn.disabled = true;
                 startBtn.disabled = true;
                 const blob = new Blob(recordedChunks, { type: 'video/webm' });
                 const formData = new FormData();
@@ -67,7 +67,7 @@
             startBtn.disabled = true;
 
             setTimeout(() => {
-                if ((stopBtn.disabled = false) && (startBtn.disabled = true)) {
+                if ((stopBtn.disabled == false) && (startBtn.disabled == true)) {
                     if (mediaRecorder.state === 'recording') mediaRecorder.stop();
 
                     stopTime = Date.now();
@@ -81,7 +81,7 @@
                     console.log("MY variable x:", x);
 
                     stopBtn.disabled = true;
-                    startBtn.disabled = false;
+                    startBtn.disabled = true;
 
                     urls = [
                         `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
@@ -105,7 +105,7 @@
             console.log("MY variable x:", x);
 
             stopBtn.disabled = true;
-            startBtn.disabled = false;
+            startBtn.disabled = true;
 
             urls = [
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
