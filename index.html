@@ -36,7 +36,7 @@
             console.log("MY STARTIME ID", idStartTime);
 
             document.getElementById("bottle-count").textContent =
-                "Processing video now. Please do not refresh the page.";
+                "Recording video now.";
             recordedChunks = [];
             const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } }, audio: true });
             preview.srcObject = stream;
@@ -70,6 +70,9 @@
                 if ((stopBtn.disabled == false) && (startBtn.disabled == true)) {
                     if (mediaRecorder.state === 'recording') mediaRecorder.stop();
 
+                    document.getElementById("bottle-count").textContent =
+                        "Your video reached the maximum length. Processing. Please do not refresh.";
+
                     stopTime = Date.now();
                     const durationMs = stopTime - startTime;
                     const durationSec = durationMs / 1000 - 0.025;
@@ -93,6 +96,9 @@
 
         stopBtn.onclick = () => {
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+
+            document.getElementById("bottle-count").textContent =
+                "Processing. Please do not refresh.";
 
             stopTime = Date.now();
             const durationMs = stopTime - startTime;
@@ -140,6 +146,8 @@
                         const count = uniqueIds.size;
                         document.getElementById("bottle-count").textContent =
                             `🍼 Total bottles detected: ${count}`;
+                        stopBtn.disabled = true;
+                        startBtn.disabled = false;
                         return;
                     }
                 }
