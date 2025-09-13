@@ -36,7 +36,7 @@
             console.log("MY STARTIME ID", idStartTime);
 
             document.getElementById("bottle-count").textContent =
-                "Loading...";
+                "Processing video now. Please do not refresh the page.";
             recordedChunks = [];
             const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } }, audio: true });
             preview.srcObject = stream;
@@ -44,6 +44,8 @@
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
             mediaRecorder.onstop = async () => {
+                stopBtn.disabled = false;
+                startBtn.disabled = true;
                 const blob = new Blob(recordedChunks, { type: 'video/webm' });
                 const formData = new FormData();
                 formData.append('video', blob, 'walk_video.webm');
