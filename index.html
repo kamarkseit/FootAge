@@ -87,8 +87,6 @@
                         `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
                     ];
                     pollForResults();
-                    stopBtn.disabled = true;
-                    startBtn.disabled = false;
                 };
             }, 30000);
         };
@@ -113,8 +111,7 @@
                 `https://plastic-bottle-detector-images.s3.amazonaws.com/results/JSONResult-${idStartTime}/all_results.json`
             ];
             pollForResults();
-            stopBtn.disabled = true;
-            startBtn.disabled = false;
+
         };
 
         // Functions to fetch json results and display it.
@@ -152,6 +149,9 @@
             }
             document.getElementById("bottle-count").textContent =
                 "⚠️ Detection results not found after waiting.";
+
+            stopBtn.disabled = true;
+            startBtn.disabled = false;
         }
 
 
