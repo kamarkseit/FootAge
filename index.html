@@ -143,6 +143,7 @@
                         data.forEach(frame => {
                             frame.tracker_ids.forEach(id => uniqueIds.add(id));
                         });
+                        console.log("uniqueIds is this:", uniqueIds)
                         const count = uniqueIds.size;
                         document.getElementById("bottle-count").textContent =
                             `🍼 Total bottles detected: ${count}`;
