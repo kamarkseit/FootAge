@@ -138,13 +138,32 @@
                 for (const url of urls) {
                     const data = await tryFetch(url);
                     if (data) {
-                        //if (data.length === num_of_frames) {
+                        //Find number of bottles detected
                         const uniqueIds = new Set();
                         data.forEach(frame => {
                             frame.tracker_ids.forEach(id => uniqueIds.add(id));
                         });
-                        console.log("uniqueIds is this:", uniqueIds)
                         const count = uniqueIds.size;
+                        //Find the best images to display
+                        const bestImages = {};
+                        data.forEach(frame => {
+                            frame.tracker_ids.forEach((id, index) => {
+                                const confidence = frame.confidences[index];
+                                const imageUrl = frame.image_url;
+
+                                if (!bestImages[id] || confidence > bestImages[id].confidence) {
+                                    bestImages[id] = {
+                                        confidence,
+                                        imageUrl,
+                                        frame: frame.frame
+                                    };
+                                }
+                            });
+                        });
+                        Object.entries(bestImages).forEach(([id, info]) => {
+                            console.log(`🧴 Bottle ${id}: ${info.imageUrl} (confidence: ${info.confidence})`);
+                        })
+
                         document.getElementById("bottle-count").textContent =
                             `🍼 Total bottles detected: ${count}`;
                         stopBtn.disabled = true;
