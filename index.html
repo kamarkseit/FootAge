@@ -35,8 +35,7 @@
 
         startBtn.onclick = async () => {
             idStartTime = getFormattedTimestamp();
-            console.log("MY STARTIME ID", idStartTime);
-
+            document.getElementById("bottle-gallery").innerHTML = "";
             document.getElementById("bottle-count").textContent =
                 "Recording video now.";
             recordedChunks = [];
@@ -79,11 +78,6 @@
                     const durationMs = stopTime - startTime;
                     const durationSec = durationMs / 1000 - 0.025;
                     const x = Math.floor(durationSec / 30) + 1; // number of 30-second segments
-                    console.log("Start time", startTime);
-                    console.log("Stop time", stopTime);
-                    console.log("DURATION IN MS:", durationMs);
-                    console.log("DURATION IN SEC:", durationSec);
-                    console.log("MY variable x:", x);
 
                     stopBtn.disabled = true;
                     startBtn.disabled = true;
@@ -106,11 +100,6 @@
             const durationMs = stopTime - startTime;
             const durationSec = durationMs / 1000 - 0.025;
             const x = Math.floor(durationSec / 0.5) + 1; // number of 30-second segments
-            console.log("Start time", startTime);
-            console.log("Stop time", stopTime);
-            console.log("DURATION IN MS:", durationMs);
-            console.log("DURATION IN SEC:", durationSec);
-            console.log("MY variable x:", x);
 
             stopBtn.disabled = true;
             startBtn.disabled = true;
