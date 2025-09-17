@@ -15,6 +15,8 @@
 
     <h2>Detection Summary</h2>
     <div id="bottle-count">Let's see how many bottles we can spot!</div>
+    <div id="bottle-gallery"></div>
+
 
     <script>
         let mediaRecorder;
@@ -160,10 +162,18 @@
                                 }
                             });
                         });
+                        //Display the best images
+                        const gallery = document.getElementById("bottle-gallery");
                         Object.entries(bestImages).forEach(([id, info]) => {
-                            console.log(`🧴 Bottle ${id}: ${info.imageUrl} (confidence: ${info.confidence})`);
-                        })
-
+                            const img = document.createElement("img");
+                            img.src = info.imageUrl;
+                            img.alt = `Bottle ${id}`;
+                            img.title = `Confidence: ${info.confidence}`;
+                            img.style.width = "150px";
+                            img.style.margin = "10px";
+                            gallery.appendChild(img);
+                        });
+                        //Display total detections found
                         document.getElementById("bottle-count").textContent =
                             `🍼 Total bottles detected: ${count}`;
                         stopBtn.disabled = true;
