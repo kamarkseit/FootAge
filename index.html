@@ -54,7 +54,7 @@
                 formData.append('video', blob, 'walk_video.webm');
                 formData.append('id', idStartTime);
 
-                // ✅ This is where your fetch() call goes
+                // This is where the fetch() call goes
                 fetch('https://footage-backend.onrender.com/upload', {
                     method: 'POST',
                     body: formData
@@ -68,7 +68,7 @@
             startTime = Date.now();
             stopBtn.disabled = false;
             startBtn.disabled = true;
-
+            // the video will be automatically processed in 30 seconds unless a user clicks Stop Recording
             setTimeout(() => {
                 if ((stopBtn.disabled == false) && (startBtn.disabled == true)) {
                     if (mediaRecorder.state === 'recording') mediaRecorder.stop();
@@ -91,7 +91,7 @@
                 };
             }, 30000);
         };
-
+        // the video will be processed if a user clicked Stop Recording
         stopBtn.onclick = () => {
             if (mediaRecorder.state === 'recording') mediaRecorder.stop();
 
