@@ -1,8 +1,8 @@
-Bottle Detection Pipeline
+# Bottle Detection Pipeline
 
 This project is a cloud-native, frame-level object detection system designed to identify and track bottles in video footage—built for precision, scalability, and transparency. It leverages YOLOv5 for real-time detection, AWS Lambda for distributed processing, and S3 for structured result storage.
 
-Features:
+## Features:
 
 Frame-by-frame detection using YOLOv5 with tracker IDs and confidence scores
 
@@ -16,11 +16,11 @@ Frontend integration for displaying detection summaries and curated thumbnails
 
 Robust pipeline design with reproducible IDs, traceable results, and scalable processing
 
-Motivation:
+## Motivation:
 
 This project was born from the need to detect bottles in varied orientations and environments—especially in real-world footage where bottles may be lying flat, partially occluded, or distant. It aims to improve detection accuracy through custom training, smart post-processing, and thoughtful UI integration.
 
-Technologies:
+## Technologies:
 
 YOLOv5 for object detection
 
@@ -32,7 +32,7 @@ JavaScript for frontend logic and dynamic image selection
 
 Python for backend orchestration and merging logic
 
-Future Plans:
+## Future Plans:
 
 Fine-tune YOLOv5 with custom bottle datasets (including flat and distant poses)
 
